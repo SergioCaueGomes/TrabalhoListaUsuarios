@@ -20,7 +20,7 @@ public class UserDAO {
 		Connection con = c.getConnection();
 		
 		try {
-			PreparedStatement p = con.prepareStatement("insert into users (nome, pais, email) values (?, ?, ?)");
+			PreparedStatement p = con.prepareStatement("insert into usuarios (nome, pais, email) values (?, ?, ?)");
 			p.setString(1, User.getNome());
 			p.setString(2, User.getPais());
 			p.setString(3, User.getEmail());
@@ -40,7 +40,7 @@ public class UserDAO {
 		Connection con = c.getConnection();
 		ArrayList<User> lista = new ArrayList<User>();
 		try {
-			PreparedStatement p = con.prepareStatement("select * from users");
+			PreparedStatement p = con.prepareStatement("select * from usuarios");
 			ResultSet r = p.executeQuery();			
 			
 			while (r.next()) {
@@ -66,7 +66,7 @@ public class UserDAO {
 		Connection con = c.getConnection();
 		
 		try {
-			PreparedStatement p = con.prepareStatement("delete from users where id = ?");
+			PreparedStatement p = con.prepareStatement("delete from usuarios where id = ?");
 			p.setInt(1, id);
 			System.out.println(p);
 			p.executeUpdate();
@@ -84,7 +84,7 @@ public class UserDAO {
 		Connection con = c.getConnection();
 		
 		try {
-			PreparedStatement p = con.prepareStatement("update users set nome = ?, pais= ? email = ? where id = ?");
+			PreparedStatement p = con.prepareStatement("update usuarios set nome = ?, pais= ? email = ? where id = ?");
 			p.setString(1, updateUser.getNome());
 			p.setString(2, updateUser.getPais());
 			p.setString(3, updateUser.getEmail());
@@ -104,7 +104,7 @@ public class UserDAO {
 		Connection con = c.getConnection();
 		User u = null;
 		try {
-			PreparedStatement p = con.prepareStatement("select * from users where id = ?");
+			PreparedStatement p = con.prepareStatement("select * from usuarios where id = ?");
 			p.setInt(1, id);
 			ResultSet r = p.executeQuery();			
 			

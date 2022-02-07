@@ -3,6 +3,7 @@ package br.com.rd.CrudUsuario.web;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -20,7 +21,7 @@ import br.com.rd.CrudUsuario.dao.UserDAO;
 @WebServlet("/UserServelet")
 public class UserServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+		private UserDAO userDao;
     /**
      * Default constructor. 
      */
@@ -33,6 +34,7 @@ public class UserServelet extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
+		userDao = new UserDAO();
 	}
 
 	
@@ -58,18 +60,23 @@ public class UserServelet extends HttpServlet {
 			break;
 		
 		case "/insert":
+			insertUser(request, response);
 			break;
 		
 		case "/delete":
+			deleteUser(request, response);
 			break;
 		
 		case "/edit":
+			showEditForm(request, response);
 			break;
 
 		case "/update":
+			updateUser(request, response);
 			break;
 			
 			default:
+			listUser(request, response);
 			break;
 		}
 		}
@@ -92,6 +99,53 @@ public class UserServelet extends HttpServlet {
 			response.sendRedirect("list");
 		}
 		
-	}
-
-
+		private void deleteUser(HttpRequest request, HttpServletResponse response) throws SQLException, IOException
+		{
+			int id = Integer.parseInt(request.getParameter("id"));
+			try {
+				userDao.deleteUser(id);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			response.sendRedirect("list");
+		}
+		
+		private void showEditForm(HttpRequest request, HttpServletResponse response) throws SQLException, IOException, ServeletException
+		{
+			int id = Integer.parseInt(request.getParameter("id"));
+			User existingUser;
+			try {
+				existingUser = userDao.selectUser(id);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
+				request.setAttribute("user", existingUser);
+				dispatcher.forward(request, response);
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+		private void updateUser(HttpRequest request, HttpServletResponse response) throws SQLException, IOException
+		{
+			int id = Integer.parseInt(request.getParameter("id"));
+			String nome =request.getParameter("nome");
+			String email =request.getParameter("email");
+			String pais =request.getParameter("pais");
+			
+			User user = new User (id, nome, email, pais);
+			userDao.updateUser(user);
+			response.sendRedirect("list");
+			
+		}
+		
+		private void listUser(HttpRequest request, HttpServletResponse response) throws SQLException, IOException
+		{
+			try {
+				List<User> listUser = userDao.selectAllUsers();
+				request.setAttribute("listUser", listUser);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
+				dispatcher.forward(request, response);
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+}
