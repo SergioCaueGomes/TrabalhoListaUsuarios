@@ -11,7 +11,7 @@
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark" style="background-color: green">
 			<div>
-				<a href="#" class="navbar-brand">User management Application</a>
+				<a href="#" class="navbar-brand">Adicionar Usuarios</a>
 			</div>
 			<ul class="navbar-nav">
 				<li><a href="<%= request.getContextPath() %>/list" class="nav-link">Usuarios</a></li>
@@ -23,7 +23,7 @@
 		<div class="card">
 			<div class="card-body">
 				<c:if test="${user != null}">
-					<form action="update" method="post">
+				<form action="update" method="post">
 				</c:if>
 				<c:if test="${user = null}">
 					<form action="insert" method="post">

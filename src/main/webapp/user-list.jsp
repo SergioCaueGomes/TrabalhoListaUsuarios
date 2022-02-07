@@ -11,10 +11,10 @@
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark" Style="background-color: green;">
 			<div>
-				<a href="#" class="navbar-brand"> User Management Application </a>
+				<a href="#" class="navbar-brand"><h2>Raia Drogasil</h2> </a>
 			</div>
-			<ul class="navbar-nav">
-				<li><a href="<%=request.getContextPath()%>/list" class="nav-link">User List</a></li>
+			<ul class="navbar-nav" style="margin-top: -20px;">
+				<li><a href="<%=request.getContextPath()%>/list" class="nav-link"><h4><nobr>Usuarios</nobr></h4></a></li>
 			</ul>
 		</nav>
 	</header>
